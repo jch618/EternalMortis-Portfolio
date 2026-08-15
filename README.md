@@ -137,6 +137,9 @@ BT에 세세한 행동들을 모두 정의하면 행동 트리가 비대해지�
 
 ### 4. 프레임 단위 정밀 타격 — `ANS_AttackTracing`
 
+https://github.com/user-attachments/assets/67fb86c7-552b-4447-8602-3df279dcd51e
+
+
 무기에 Collision Box를 부착하는 방식은 타격 반경이 부정확하고, 빠른 모션에서 충돌을 건너뛰는(Tunneling) 문제가 있었습니다. 또한 맨손 공격 적을 구현할 수 없었습니다.
 
 - 소켓 기반 Sphere Trace를 `NotifyTick`마다 실행, 프레임 간 위치를 Sweep하여 터널링 방지
