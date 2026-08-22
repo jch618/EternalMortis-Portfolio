@@ -21,13 +21,11 @@
 |---|---|
 | 장르 | 3D 소울라이크 + 로그라이크 |
 | 엔진 | Unreal Engine 5.6 |
-| 개발 인원 | 4인 (플레이어 / **Enemy·전투·애니메이션·스폰** / 맵 디자인 / UI) |
-| 담당 영역 | Enemy AI, 전투 로직, 애니메이션 파이프라인, 스폰 아키텍처, 오디오 |
-| 주요 기술 | GAS, Behavior Tree, Motion Warping, Linked Anim Layer, EQS |
+| 개발 인원 | 4인 (플레이어 / **Enemy** / 맵 디자인 / UI) |
+| 담당 영역 | Enemy AI, 전투 로직, 애니메이션, 스폰 시스템 |
+| 기술 스택 | C++, GAS, Motion Warping |
 
 개발기간: 26.02 ~ 26.07(약 6개월)
-
-**의존 모듈** — `GameplayAbilities` `GameplayTags` `GameplayTasks` `MotionWarping` `AIModule` `NavigationSystem` `AnimGraphRuntime` `Niagara`
 
 ---
 
@@ -126,7 +124,7 @@ classDiagram
 
 ### 3. AI — Behavior Tree와 GAS의 역할 분리
 
-BT에 세세한 행동들을 모두 정의하면 행동 트리가 비대해지고 복잡해집니다. **BT는 판단만, 실행은 GAS**로 위임했습니다.
+BT에 세세한 행동들을 모두 정의하면 행동 트리가 복잡해집니다. **BT는 판단만, 실행은 GAS**로 위임했습니다.
 
 - `BTT_SendGameplayEvent` — BT에서 GAS 어빌리티를 트리거하는 브릿지. `StateTagToWait` 태그를 폴링해 어빌리티 종료까지 노드를 `InProgress`로 유지, 두 시스템의 생명주기를 동기화 (태그 미설정 시 Fire-and-Forget)
 - `BTT_SelectAttackPattern` — 거리·각도를 기준으로 발동 가능한 패턴을 필터링 후 가중치 랜덤 선택
@@ -147,7 +145,7 @@ BT에 세세한 행동들을 모두 정의하면 행동 트리가 비대해지�
 https://github.com/user-attachments/assets/67fb86c7-552b-4447-8602-3df279dcd51e
 
 
-무기에 Collision Box를 부착하는 방식은 타격 반경이 부정확하고, 빠른 모션에서 충돌을 건너뛰는(Tunneling) 문제가 있었습니다. 또한 맨손 공격 적을 구현할 수 없었습니다.
+무기에 Collision Box를 부착하는 방식은 타격 반경이 부정확하고, 빠른 모션에서 충돌을 건너뛰는(Tunneling) 문제가 있었습니다. 또한 맨손 공격을 구현하는데 어려움이 생겼습니다.
 
 - 소켓 기반 Sphere Trace를 `NotifyTick`마다 실행, 프레임 간 위치를 Sweep하여 터널링 방지
 - `FMortisAttackTraceConfig`로 반경·소켓·메시 소스를 완전히 데이터화
