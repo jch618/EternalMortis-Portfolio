@@ -1,5 +1,4 @@
-# EternalMortis — Enemy / Combat / Animation / Spawn 아키텍처
-
+# EternalMortis — Enemy System
 소울라이크 + 로그라이크 3D 액션 게임 **EternalMortis**에서 제가 설계·구현한 C++ 시스템 소스 코드입니다.
 
 <div align="center">
@@ -21,7 +20,7 @@
 |---|---|
 | 장르 | 3D 소울라이크 + 로그라이크 |
 | 엔진 | Unreal Engine 5.6 |
-| 개발 인원 | 4인 (플레이어 / **Enemy** / 맵 디자인 / UI) |
+| 개발 인원 | 4인 (플레이어 / **적(Enemy)** / 맵 디자인 / UI) |
 | 담당 영역 | Enemy AI, 전투 로직, 애니메이션, 스폰 시스템 |
 | 기술 스택 | C++, GAS, Motion Warping |
 
@@ -95,7 +94,7 @@ classDiagram
 **결과** — C++ 코드 추가 없이, 에디터에서 Data Asset 필드 할당만으로 신규 몬스터 추가 완료.
 
 
-📁 [`Character/Enemy/`](Source/EternalMortis/Public/Character/Enemy) · [`System/MortisEnemyDataSubsystem.h`](Source/EternalMortis/Public/System/MortisEnemyDataSubsystem.h)
+**소스** — `MortisEnemyCharacter` [.h](Source/EternalMortis/Public/Character/Enemy/MortisEnemyCharacter.h) / [.cpp](Source/EternalMortis/Private/Character/Enemy/MortisEnemyCharacter.cpp) · `MortisEnemyData` [.h](Source/EternalMortis/Public/Character/Enemy/MortisEnemyData.h) / [.cpp](Source/EternalMortis/Private/Character/Enemy/MortisEnemyData.cpp) · `MortisEnemyDataSubsystem` [.h](Source/EternalMortis/Public/System/MortisEnemyDataSubsystem.h) / [.cpp](Source/EternalMortis/Private/System/MortisEnemyDataSubsystem.cpp)
 
 ---
 
@@ -118,7 +117,7 @@ classDiagram
 - **콤보 조기 전환** — `bUseComboTransitionNotify` 스텝은 몽타주 종료 전 `Event_Combat_Combo_Next` 수신 시 다음 스텝 진입. 회수 모션을 건너뛰어 다음 공격 모션으로 빠르게 넘어감.
 - **패턴 선택 가중치 감쇠** — 선택된 패턴의 가중치를 감쇠시키고 나머지를 회복시켜 동일 패턴 연속 발생 확률을 동적으로 억제
 
-📁 [`GA_ExecuteAttackPattern.cpp`](Source/EternalMortis/Private/AbilitySystem/Abilities/Enemy/MortisGA_ExecuteAttackPattern.cpp) · [`MortisAT_UpdateWarpTarget.cpp`](Source/EternalMortis/Private/AbilitySystem/AbilityTasks/MortisAT_UpdateWarpTarget.cpp) · [`MortisStructTypes.h`](Source/EternalMortis/Public/Types/MortisStructTypes.h)
+**소스** — `MortisGA_ExecuteAttackPattern` [.h](Source/EternalMortis/Public/AbilitySystem/Abilities/Enemy/MortisGA_ExecuteAttackPattern.h) / [.cpp](Source/EternalMortis/Private/AbilitySystem/Abilities/Enemy/MortisGA_ExecuteAttackPattern.cpp) · `MortisAT_UpdateWarpTarget` [.h](Source/EternalMortis/Public/AbilitySystem/AbilityTasks/MortisAT_UpdateWarpTarget.h) / [.cpp](Source/EternalMortis/Private/AbilitySystem/AbilityTasks/MortisAT_UpdateWarpTarget.cpp) · [`MortisStructTypes.h`](Source/EternalMortis/Public/Types/MortisStructTypes.h)
 
 ---
 
@@ -136,7 +135,9 @@ BT에 세세한 행동들을 모두 정의하면 행동 트리가 복잡해집�
 
 ![Behavior Tree 예시](Docs/Image/behavior_tree.png)
 
-📁 [`AI/`](Source/EternalMortis/Public/AI) · [`Controllers/MortisAIController.h`](Source/EternalMortis/Public/Controllers/MortisAIController.h)
+**소스** — `MortisBTT_SendGameplayEvent` [.h](Source/EternalMortis/Public/AI/Tasks/MortisBTT_SendGameplayEvent.h) / [.cpp](Source/EternalMortis/Private/AI/Tasks/MortisBTT_SendGameplayEvent.cpp) · `MortisAIController` [.h](Source/EternalMortis/Public/Controllers/MortisAIController.h) / [.cpp](Source/EternalMortis/Private/Controllers/MortisAIController.cpp)
+
+**디렉토리** — `AI/Tasks` [Public](Source/EternalMortis/Public/AI/Tasks) / [Private](Source/EternalMortis/Private/AI/Tasks) · `AI/Services` [Public](Source/EternalMortis/Public/AI/Services) / [Private](Source/EternalMortis/Private/AI/Services) · `AI/EQS` [Public](Source/EternalMortis/Public/AI/EQS) / [Private](Source/EternalMortis/Private/AI/EQS)
 
 ---
 
@@ -152,7 +153,7 @@ https://github.com/user-attachments/assets/67fb86c7-552b-4447-8602-3df279dcd51e
 - **트레이스 설정을 배열로 관리** — 양손무기, 콤보 오버랩 등 다중 트레이스 동시 활성화 지원
 - `EMortisMeshSource`로 무기 메시 / 캐릭터 메시 선택 → 무기 장착 여부와 무관하게 동작
 
-📁 [`ANS_AttackTracing.cpp`](Source/EternalMortis/Private/Animation/NotifyStates/MortisANS_AttackTracing.cpp) · [`MortisEnemyCombatComponent.cpp`](Source/EternalMortis/Private/Components/Combat/MortisEnemyCombatComponent.cpp)
+**소스** — `MortisANS_AttackTracing` [.h](Source/EternalMortis/Public/Animation/NotifyStates/MortisANS_AttackTracing.h) / [.cpp](Source/EternalMortis/Private/Animation/NotifyStates/MortisANS_AttackTracing.cpp) · `MortisEnemyCombatComponent` [.h](Source/EternalMortis/Public/Components/Combat/MortisEnemyCombatComponent.h) / [.cpp](Source/EternalMortis/Private/Components/Combat/MortisEnemyCombatComponent.cpp) · `MortisCombatComponent` [.h](Source/EternalMortis/Public/Components/Combat/MortisCombatComponent.h) / [.cpp](Source/EternalMortis/Private/Components/Combat/MortisCombatComponent.cpp)
 
 ---
 
@@ -178,7 +179,9 @@ Linked Anim Layer 구조
 - `RegisterAndCallGameplayTagEvent`로 태그 변경 구독 → `FindFProperty<FBoolProperty>` 리플렉션으로 멤버 변수 직접 갱신
 - 상태 추가 시 바인딩 코드 수정 없이 에디터에서 쌍만 등록
 
-📁 [`Animation/`](Source/EternalMortis/Public/Animation) · [`MortisEnemyAnimInstance.cpp`](Source/EternalMortis/Private/Animation/MortisEnemyAnimInstance.cpp)
+**소스** — `MortisEnemyAnimInstance` [.h](Source/EternalMortis/Public/Animation/MortisEnemyAnimInstance.h) / [.cpp](Source/EternalMortis/Private/Animation/MortisEnemyAnimInstance.cpp) · `MortisCharacterAnimInstanceBase` [.h](Source/EternalMortis/Public/Animation/MortisCharacterAnimInstanceBase.h) / [.cpp](Source/EternalMortis/Private/Animation/MortisCharacterAnimInstanceBase.cpp) · `MortisKnightLinkedAnimLayer` [.h](Source/EternalMortis/Public/Animation/MortisKnightLinkedAnimLayer.h) / [.cpp](Source/EternalMortis/Private/Animation/MortisKnightLinkedAnimLayer.cpp)
+
+**디렉토리** — `Animation` [Public](Source/EternalMortis/Public/Animation) / [Private](Source/EternalMortis/Private/Animation)
 
 ---
 
@@ -197,7 +200,9 @@ Linked Anim Layer 구조
 
 **결과** — 레벨 디자이너와 프로그래머의 작업 영역 분리. 전투 중 스폰도 공격 패턴과 동일한 데이터 주도 구조로 통합.
 
-📁 [`Spawn/`](Source/EternalMortis/Public/Spawn)
+**소스** — `MortisSpawnSubsystem` [.h](Source/EternalMortis/Public/Spawn/MortisSpawnSubsystem.h) / [.cpp](Source/EternalMortis/Private/Spawn/MortisSpawnSubsystem.cpp) · `MortisEnemySpawnerComponent` [.h](Source/EternalMortis/Public/Spawn/MortisEnemySpawnerComponent.h) / [.cpp](Source/EternalMortis/Private/Spawn/MortisEnemySpawnerComponent.cpp) · `MortisSpawnConfig` [.h](Source/EternalMortis/Public/Spawn/MortisSpawnConfig.h) / [.cpp](Source/EternalMortis/Private/Spawn/MortisSpawnConfig.cpp)
+
+**디렉토리** — `Spawn` [Public](Source/EternalMortis/Public/Spawn) / [Private](Source/EternalMortis/Private/Spawn)
 
 ---
 
@@ -207,7 +212,7 @@ Linked Anim Layer 구조
 - `MortisEnemyDataSubsystem` — 스케일링 데이터 로드 및 캐싱
 - `MortisMusicSubsystem` — 층별 탐험/보스 BGM 전환
 
-📁 [`System/`](Source/EternalMortis/Public/System) · [`Audio/`](Source/EternalMortis/Public/Audio)
+**소스** — `MortisBossSubsystem` [.h](Source/EternalMortis/Public/System/MortisBossSubsystem.h) / [.cpp](Source/EternalMortis/Private/System/MortisBossSubsystem.cpp) · `MortisEnemyDataSubsystem` [.h](Source/EternalMortis/Public/System/MortisEnemyDataSubsystem.h) / [.cpp](Source/EternalMortis/Private/System/MortisEnemyDataSubsystem.cpp) · `MortisMusicSubsystem` [.h](Source/EternalMortis/Public/Audio/MortisMusicSubsystem.h) / [.cpp](Source/EternalMortis/Private/Audio/MortisMusicSubsystem.cpp)
 
 ---
 
