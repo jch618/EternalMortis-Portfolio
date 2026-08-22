@@ -1,10 +1,17 @@
 # EternalMortis — Enemy / Combat / Animation / Spawn 아키텍처
 
-소울라이크 + 로그라이크 3D 액션 게임 **EternalMortis**에서 제가 설계·구현한 C++ 시스템의 소스 코드입니다.
+소울라이크 + 로그라이크 3D 액션 게임 **EternalMortis**에서 제가 설계·구현한 C++ 시스템 소스 코드입니다.
+
+<div align="center">
+
+[![포트폴리오 영상](https://img.youtube.com/vi/xwlIfsDToOY/maxresdefault.jpg)](https://youtu.be/xwlIfsDToOY)
+
+**🎥 [포트폴리오 영상 보기](https://youtu.be/xwlIfsDToOY)** &nbsp;·&nbsp; **🎮 [itch.io에서 플레이](https://ssutte.itch.io/eternal-mortis)**
+
+</div>
 
 > **이 저장소는 코드 열람용입니다.**
 > 팀 프로젝트 특성상 본인 담당 영역의 소스만 발췌했으므로 단독 빌드는 불가능합니다.
-> 플레이 가능한 빌드는 [itch.io 링크](https://ssutte.itch.io/eternal-mortis)에서 확인하실 수 있습니다.
 
 ---
 
