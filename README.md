@@ -221,8 +221,7 @@ Linked Anim Layer 구조
 | 문제 | 원인 | 해결 |
 |---|---|---|
 | 스트레이핑 방향이 ±180° 경계에서 반대로 회전 | Yaw는 순환값이라 선형 보간이 최단 경로를 보장하지 않음 | Blend Space 축의 Wrap Input으로 경계를 연속 처리 |
-| 경계 문제 해결 후에도 다리 애니메이션이 떨림 | StrafingLoc에 도달할 경우 GroundSpeed가 순간적으로 0이 됨 | FInterpTo로 Speed를 보간해 급변 구간 완화 |
-| 스트레이핑 중 캐릭터 방향 진동 | Yaw 각도(순환값)를 `RInterpTo`로 보간 → ±180° 경계에서 최단 경로가 아닌 반대 방향으로 회전 | 각도 대신 속도 **벡터**를 `VInterpTo`로 보간 후 각도 역산 |
+| 경계 문제 해결 후에도 다리 애니메이션이 떨림 | StrafingLoc에 도달할 경우 GroundSpeed가 순간적으로 0이 됨| FInterpTo로 Speed를 보간해 급변 구간 완화 |
 | 투사체 데미지가 적용되지 않음 | `BeginPlay` 이전에 GE SpecHandle이 주입되어 충돌 시점에 무효화 | `InitializeProjectile()` 명시적 초기화 패턴으로 주입 시점 제어 |
 | 포이즈 데미지가 누산됨 | 동시 GE 다중 적용 시 `IncomingPoiseDamage`가 리셋되지 않음 | `PostGameplayEffectExecute`에서 읽기 직후 즉시 0으로 리셋 |
 
